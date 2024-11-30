@@ -1,0 +1,12 @@
+{
+  "name": "love-story",
+  "version": "1.0.0",
+  "description": "Our Love Story",
+  "scripts": {
+    "start": "serve",
+    "build": "echo 'No build required'"
+  },
+  "dependencies": {
+    "serve": "^14.0.0"
+  }
+}

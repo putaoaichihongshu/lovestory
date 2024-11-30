@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Our Love Story</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #ffd1dc, #fff6f6);
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .scene {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            position: absolute;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        .scene.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        .photo-container {
+            width: 400px;
+            height: 500px;
+            perspective: 1000px;
+        }
+
+        .photo {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .text-content {
+            max-width: 400px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+        }
+
+        .text-content.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .text-content h2 {
+            color: #ff6b88;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .text-content p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .next-btn {
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #ff6b88, #ff8da1);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            margin-top: 20px;
+            box-shadow: 0 3px 10px rgba(255, 107, 136, 0.2);
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 136, 0.4);
+        }
+
+        .floating-hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            to {
+                transform: translateY(-120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .heart {
+            position: fixed;
+            font-size: 20px;
+            animation: float 4s linear forwards;
+        }
+
+        .proposal-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .proposal-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            color: white;
+        }
+
+        .yes-btn {
+            background: linear-gradient(45deg, #ff6b88, #ff8da1);
+            box-shadow: 0 3px 10px rgba(255, 107, 136, 0.2);
+        }
+
+        .no-btn {
+            background: linear-gradient(45deg, #8b8b8b, #a1a1a1);
+            box-shadow: 0 3px 10px rgba(139, 139, 139, 0.2);
+        }
+
+        .proposal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .response-text {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #ff6b88;
+            font-weight: bold;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .response-text.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts"></div>
+
+    <!-- 第一幕：牵手 -->
+    <div class="scene active" id="scene1">
+        <div class="content-wrapper">
+            <div class="photo-container">
+                <div class="photo">
+                    <img src="fig/牵手.jpg" alt="First Touch">
+                </div>
+            </div>
+            <div class="text-content">
+                <h2>初遇时光</h2>
+                <p>第一次牵起你的手，</p>
+                <p>指尖传来的温暖，</p>
+                <p>让我的心跳漏了一拍。</p>
+                <p>那一刻，我知道，</p>
+                <p>这就是我想牵一辈子的手。</p>
+                <button class="next-btn" onclick="showNextScene(2)">下一页</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第二幕：涂指甲油 -->
+    <div class="scene" id="scene2">
+        <div class="content-wrapper">
+            <div class="photo-container">
+                <div class="photo">
+                    <img src="fig/指甲油.jpg" alt="Nail Polish">
+                </div>
+            </div>
+            <div class="text-content">
+                <h2>温柔时刻</h2>
+                <p>笨拙地帮你涂指甲油，</p>
+                <p>生怕弄花了你的美丽，</p>
+                <p>看着你专注的样子，</p>
+                <p>我的心里满是幸福。</p>
+                <p>原来爱情，</p>
+                <p>就藏在这些细微的瞬间。</p>
+                <button class="next-btn" onclick="showNextScene(3)">下一页</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第三幕：情侣戒指 -->
+    <div class="scene" id="scene3">
+        <div class="content-wrapper">
+            <div class="photo-container">
+                <div class="photo">
+                    <img src="fig/戒指.jpg" alt="Promise Ring">
+                </div>
+            </div>
+            <div class="text-content">
+                <h2>承诺时刻</h2>
+                <p>一枚戒指，一个承诺，</p>
+                <p>串起了我们的点点滴滴。</p>
+                <p>虽然它不是最贵重的礼物，</p>
+                <p>却承载着我最真挚的心意：</p>
+                <p>愿陪你走过漫长岁月，</p>
+                <p>让这份爱意，永远闪耀。</p>
+                <button class="next-btn" onclick="showNextScene(4)">下一页</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第四幕：生日 -->
+    <div class="scene" id="scene4">
+        <div class="content-wrapper">
+            <div class="photo-container">
+                <div class="photo">
+                    <img src="fig/生日.jpg" alt="Birthday">
+                </div>
+            </div>
+            <div class="text-content">
+                <h2>生日快乐</h2>
+                <p>看着蛋糕上的烛光，</p>
+                <p>映照着你幸福的笑脸，</p>
+                <p>这一刻，我多么希望，</p>
+                <p>能够陪你过完所有生日，</p>
+                <p>见证你的每一个愿望。</p>
+                <button class="next-btn" onclick="showNextScene(5)">下一页</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第五幕：最终告白 -->
+    <div class="scene" id="scene5">
+        <div class="content-wrapper">
+            <div class="photo-container">
+                <div class="photo">
+                    <img src="fig/美照.jpg" alt="Love">
+                </div>
+            </div>
+            <div class="text-content">
+                <h2>爱的告白</h2>
+                <p>亲爱的，</p>
+                <p>感谢你让我的生命如此美好，</p>
+                <p>因为有你，平凡的日子都变得特别。</p>
+                <p>我不善言辞，</p>
+                <p>但我想让你知道：</p>
+                <p>你就是我最美好的意外，</p>
+                <p>是我想共度一生的人。</p>
+                <p>我爱你。</p>
+                <button class="next-btn" onclick="createHearts()">撒下爱心</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第六幕：求婚互动 -->
+    <div class="scene" id="scene6">
+        <div class="content-wrapper">
+            <div class="photo-container">
+                <div class="photo">
+                    <img src="fig/proposal.jpg" alt="Proposal">
+                </div>
+            </div>
+            <div class="text-content">
+                <h2>浪漫求婚</h2>
+                <p>亲爱的，</p>
+                <p>你愿意嫁给我吗？</p>
+                <div class="proposal-buttons">
+                    <button class="proposal-btn yes-btn" onclick="proposalResponse(true)">愿意</button>
+                    <button class="proposal-btn no-btn" onclick="proposalResponse(false)">不愿意</button>
+                </div>
+                <div id="proposal-response" class="response-text"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentScene = 1;
+
+        function showNextScene(sceneNum) {
+            document.getElementById(`scene${currentScene}`).classList.remove('active');
+            currentScene = sceneNum;
+            const nextScene = document.getElementById(`scene${currentScene}`);
+            nextScene.classList.add('active');
+
+            setTimeout(() => {
+                nextScene.querySelector('.text-content').classList.add('show');
+            }, 500);
+
+            if (currentScene === 5) {
+                createHearts();
+                setTimeout(() => {
+                    showNextScene(6);
+                }, 3000);
+            }
+        }
+
+        function createHearts() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.className = 'heart';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = '100vh';
+                    heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+                    document.querySelector('.floating-hearts').appendChild(heart);
+                    setTimeout(() => heart.remove(), 4000);
+                }, i * 100);
+            }
+        }
+
+        // 页面加载时显示第一幕文字
+        window.onload = function() {
+            setTimeout(() => {
+                document.querySelector('.text-content').classList.add('show');
+            }, 500);
+        }
+
+        // 添加求婚响应函数
+        function proposalResponse(isYes) {
+            const responseDiv = document.getElementById('proposal-response');
+            responseDiv.classList.remove('show');
+
+            setTimeout(() => {
+                if (isYes) {
+                    responseDiv.textContent = '还没到100次！不准答应！';
+                    document.querySelector('.yes-btn').classList.add('shake');
+                    setTimeout(() => {
+                        document.querySelector('.yes-btn').classList.remove('shake');
+                    }, 500);
+                } else {
+                    responseDiv.textContent = '嘻嘻，选择正确';
+                    createHearts();
+                }
+                responseDiv.classList.add('show');
+            }, 100);
+        }
+    </script>
+</body>
+</html>
